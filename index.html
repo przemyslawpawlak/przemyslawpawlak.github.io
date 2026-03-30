@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Przemyslaw "Brian" Pawlak — QA Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg: #0a0e14;
+      --surface: #111820;
+      --surface2: #162030;
+      --accent: #00c8a0;
+      --accent2: #0087ff;
+      --text: #e8edf5;
+      --text-muted: #6b7c95;
+      --text-dim: #3a4a60;
+      --border: #1e2d42;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-mono: 'DM Mono', monospace;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+ 
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 0;
+    }
+ 
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10, 14, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+ 
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+ 
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+ 
+    .nav-links a:hover { color: var(--accent); }
+ 
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+ 
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+ 
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+ 
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+ 
+    .hero-title {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.6s;
+    }
+ 
+    .hero-title span {
+      color: var(--accent2);
+    }
+ 
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.8s;
+    }
+ 
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1s;
+    }
+ 
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+ 
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      font-weight: 500;
+    }
+ 
+    .btn-primary:hover {
+      background: #00e0b5;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0, 200, 160, 0.3);
+    }
+ 
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+ 
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+ 
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1.2s;
+    }
+ 
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--text-dim);
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scanLine 2s ease-in-out infinite;
+    }
+ 
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 4rem;
+    }
+ 
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+ 
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+ 
+    .section-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 3rem;
+    }
+ 
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+ 
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+    }
+ 
+    .skill-card:hover::before { height: 100%; }
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+ 
+    .skill-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+ 
+    .skill-name {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+ 
+    .skill-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+ 
+    /* PORTFOLIO */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+ 
+    .portfolio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .portfolio-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+ 
+    .portfolio-card:hover::after { transform: scaleX(1); }
+    .portfolio-card:hover {
+      border-color: var(--surface2);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+ 
+    .card-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      background: rgba(0, 200, 160, 0.08);
+      border: 1px solid rgba(0, 200, 160, 0.2);
+      border-radius: 3px;
+      padding: 0.2rem 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+ 
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+ 
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+ 
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .meta-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      background: var(--surface2);
+      border-radius: 3px;
+      padding: 0.2rem 0.5rem;
+    }
+ 
+    .card-highlights {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .card-highlights li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .card-highlights li:last-child { border-bottom: none; }
+ 
+    .card-highlights li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+ 
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+ 
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+    }
+ 
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+ 
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+ 
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+ 
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+ 
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+ 
+    /* CONTACT */
+    .contact-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+ 
+    .contact-text h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+ 
+    .contact-text p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+ 
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+ 
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+ 
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    @keyframes scanLine {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+ 
+    /* Intersection observer classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+ 
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+ 
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { flex-direction: column; }
+      .scroll-indicator { left: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">bp.qa</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">// QA Engineer — Victoria, BC</div>
+    <h1>Przemyslaw <em>"Brian"</em><br>Pawlak</h1>
+    <div class="hero-title">
+      Quality Assurance Engineer &nbsp;·&nbsp;
+      <span>20+ Years Manual Testing</span> &nbsp;·&nbsp;
+      Automation in Progress
+    </div>
+    <p>
+      I find the bugs that matter. With over two decades in manual QA and a growing automation skillset,
+      I specialize in turning complex requirements into rigorous test strategies — and in knowing the
+      difference between a defect that can wait and one that can't.
+    </p>
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+      <a href="https://www.linkedin.com/in/przemyslawpawlak" target="_blank" class="btn btn-secondary">LinkedIn →</a>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </div>
+ 
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <div class="section-label">// 01 — About</div>
+      <h2 class="section-title">Sharp eyes.<br>Sharper questions.</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I've been breaking software professionally for <strong>over 20 years</strong> — and I still find it
+          satisfying every time something fails in a way nobody expected. Good QA isn't about following a checklist.
+          It's about understanding what the application is supposed to do, what it actually does, and why the gap between
+          those two things matters.
+        </p>
+        <p>
+          My background spans <strong>manual testing, test planning, defect analysis, and documentation review</strong>.
+          I'm currently building out my automation skillset with Selenium, Postman, and Python — because the best
+          testers in the next decade will be the ones who can do both.
+        </p>
+        <p>
+          I'm based in <strong>Victoria, BC</strong> and open to remote and hybrid opportunities across Canada.
+          My longer term interest is in <strong>AI quality assurance and auditing</strong> — a field that needs
+          people who can think critically about system behavior, not just run scripts against it.
+        </p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">20+</div>
+          <div class="stat-label">Years in QA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Years Automation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Assignment Grade</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">27</div>
+          <div class="stat-label">Defects in One Audit</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <div class="section-label">// 02 — Skills</div>
+      <h2 class="section-title">The toolkit.</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">🧪</div>
+        <div class="skill-name">Test Planning</div>
+        <div class="skill-desc">End-to-end test plans, risk analysis, timeframe estimation, entry and exit criteria.</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🐛</div>
+        <div class="skill-name">Defect Tracking</div>
+        <div class="skill-desc">JIRA, Elementool. Precise bug reports with clear reproduction steps and severity classification.</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">Selenium</div>
+        <div class="skill-desc">Browser automation for functional and regression testing across web applications.</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🔌</div>
+        <div class="skill-name">Postman</div>
+        <div class="skill-desc">API testing, request collections, environment variables, and response validation.</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-desc">In active development. Targeting pytest, automation scripting, and data analysis workflows.</div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📋</div>
+        <div class="skill-name">Documentation Review</div>
+        <div class="skill-desc">EDD/IDD analysis, requirements traceability, spec-vs-implementation gap analysis.</div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="reveal">
+      <div class="section-label">// 03 — Portfolio</div>
+      <h2 class="section-title">The work.</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="portfolio-grid">
+ 
+      <div class="portfolio-card reveal">
+        <div class="card-tag">Defect Analysis</div>
+        <div class="card-title">EDD Findings Report — Loan Management System</div>
+        <div class="card-desc">
+          A comprehensive audit of a web-based banking application's external design documentation
+          against the live application and internal design spec. Produced a prioritized findings
+          report identifying critical gaps between documentation and implemented behavior.
+        </div>
+        <div class="card-meta">
+          <span class="meta-tag">27 findings</span>
+          <span class="meta-tag">5 critical</span>
+          <span class="meta-tag">3 high</span>
+          <span class="meta-tag">3 moderate</span>
+          <span class="meta-tag">16 minor</span>
+        </div>
+        <ul class="card-highlights">
+          <li>Identified 5 critical pages entirely absent from specification</li>
+          <li>Reverse-engineered undocumented calculation formulas from live app</li>
+          <li>Cross-referenced EDD, IDD, and live application across all findings</li>
+          <li>Produced severity-classified prioritized defect report</li>
+        </ul>
+      </div>
+ 
+      <div class="portfolio-card reveal">
+        <div class="card-tag">Test Planning</div>
+        <div class="card-title">Application Test Plan — Loan Management System</div>
+        <div class="card-desc">
+          A full test plan for a web-based loan prequalification application, following
+          industry-standard test plan structure. Covers functional overview, risk assessment,
+          test strategy, resource estimates, and test coverage across all functional areas.
+        </div>
+        <div class="card-meta">
+          <span class="meta-tag">127 test cases</span>
+          <span class="meta-tag">32.4 working days</span>
+          <span class="meta-tag">8 builds</span>
+        </div>
+        <ul class="card-highlights">
+          <li>Full timeframe calculation using industry estimation model</li>
+          <li>Risk assessment identifying 4 key project risks</li>
+          <li>Test strategy covering smoke, function, and system test phases</li>
+          <li>Entry and exit criteria defined for test execution</li>
+        </ul>
+      </div>
+ 
+      <div class="portfolio-card reveal">
+        <div class="card-tag">Test Cases</div>
+        <div class="card-title">Traceability Matrix — Add Customer Page</div>
+        <div class="card-desc">
+          A structured traceability matrix mapping 37 test scenarios to the Customer Personal
+          Data section of a loan management application's Add Customer page. Covers mandatory
+          field validation, data type constraints, character limits, and DDLB behavior.
+        </div>
+        <div class="card-meta">
+          <span class="meta-tag">37 scenarios</span>
+          <span class="meta-tag">11 fields tested</span>
+          <span class="meta-tag">Excel</span>
+        </div>
+        <ul class="card-highlights">
+          <li>Mandatory field validation for Account#, First Name, Last Name</li>
+          <li>Character limit and data type testing across all text fields</li>
+          <li>DDLB option coverage for Title and Province fields</li>
+          <li>Full save and cancel scenario coverage</li>
+        </ul>
+      </div>
+ 
+      <div class="portfolio-card reveal">
+        <div class="card-tag">Requirements & User Stories</div>
+        <div class="card-title">User Story Analysis — My Profile Page</div>
+        <div class="card-desc">
+          Analysis of an original user story for a profile management feature, identifying
+          seven specification gaps and producing a revised user story with five Given-When-Then
+          acceptance criteria scenarios covering all page controls and edge cases.
+        </div>
+        <div class="card-meta">
+          <span class="meta-tag">5 scenarios</span>
+          <span class="meta-tag">Given-When-Then</span>
+          <span class="meta-tag">Requirements Analysis</span>
+        </div>
+        <ul class="card-highlights">
+          <li>Identified 7 gaps in original user story specification</li>
+          <li>Produced revised user story with precise acceptance criteria</li>
+          <li>Documented UI inconsistency between IDD spec and live application</li>
+          <li>Covered image upload, field validation, and cancel behavior</li>
+        </ul>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <div class="section-label">// 04 — Contact</div>
+      <h2 class="section-title">Let's talk.</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="contact-inner reveal">
+      <div class="contact-text">
+        <h3>Open to opportunities.</h3>
+        <p>QA Engineer roles, contract testing engagements, and conversations about AI auditing.</p>
+        <p style="margin-top:0.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">
+          Victoria, BC &nbsp;·&nbsp; Remote friendly &nbsp;·&nbsp; Open to relocation
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/przemyslawpawlak" target="_blank" class="btn btn-primary">
+          LinkedIn Profile
+        </a>
+        <a href="mailto:bpawlak@gmail.com" class="btn btn-secondary">
+          Send Email
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Przemyslaw "Brian" Pawlak &nbsp;·&nbsp; QA Engineer &nbsp;·&nbsp; Victoria, BC</p>
+  </footer>
+ 
+  <script>
+    // Intersection Observer for reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+ 
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+ 
+    // Stagger children in grids
+    document.querySelectorAll('.skills-grid .skill-card, .portfolio-grid .portfolio-card').forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 3) * 0.1}s`;
+    });
+  </script>
+ 
+</body>
+</html>
