@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Przemyslaw "Brian" Pawlak — QA Engineer</title>
+  <title>Przemyslaw "Brian" Pawlak | QA Engineer</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
     :root {
       --bg: #0a0e14;
       --surface: #111820;
@@ -22,9 +22,9 @@
       --font-mono: 'DM Mono', monospace;
       --font-body: 'DM Sans', system-ui, sans-serif;
     }
- 
+
     html { scroll-behavior: smooth; }
- 
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -33,7 +33,7 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
- 
+
     /* Grid background */
     body::before {
       content: '';
@@ -47,7 +47,7 @@
       pointer-events: none;
       z-index: 0;
     }
- 
+
     /* NAV */
     nav {
       position: fixed;
@@ -61,20 +61,20 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
- 
+
     .nav-logo {
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: var(--accent);
       letter-spacing: 0.05em;
     }
- 
+
     .nav-links {
       display: flex;
       gap: 2.5rem;
       list-style: none;
     }
- 
+
     .nav-links a {
       font-family: var(--font-mono);
       font-size: 0.78rem;
@@ -84,9 +84,9 @@
       text-transform: uppercase;
       transition: color 0.2s;
     }
- 
+
     .nav-links a:hover { color: var(--accent); }
- 
+
     /* HERO */
     .hero {
       position: relative;
@@ -99,7 +99,7 @@
       max-width: 1100px;
       margin: 0 auto;
     }
- 
+
     .hero-tag {
       font-family: var(--font-mono);
       font-size: 0.78rem;
@@ -110,7 +110,7 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.2s;
     }
- 
+
     .hero h1 {
       font-family: var(--font-display);
       font-size: clamp(3rem, 7vw, 5.5rem);
@@ -120,12 +120,12 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.4s;
     }
- 
+
     .hero h1 em {
       font-style: italic;
       color: var(--accent);
     }
- 
+
     .hero-title {
       font-family: var(--font-mono);
       font-size: 1rem;
@@ -134,11 +134,11 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.6s;
     }
- 
+
     .hero-title span {
       color: var(--accent2);
     }
- 
+
     .hero p {
       font-size: 1.1rem;
       color: var(--text-muted);
@@ -148,7 +148,7 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.8s;
     }
- 
+
     .hero-cta {
       display: flex;
       gap: 1rem;
@@ -156,7 +156,7 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 1s;
     }
- 
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -170,31 +170,31 @@
       transition: all 0.2s;
       cursor: pointer;
     }
- 
+
     .btn-primary {
       background: var(--accent);
       color: #000;
       font-weight: 500;
     }
- 
+
     .btn-primary:hover {
       background: #00e0b5;
       transform: translateY(-1px);
       box-shadow: 0 8px 24px rgba(0, 200, 160, 0.3);
     }
- 
+
     .btn-secondary {
       background: transparent;
       color: var(--text-muted);
       border: 1px solid var(--border);
     }
- 
+
     .btn-secondary:hover {
       border-color: var(--accent);
       color: var(--accent);
       transform: translateY(-1px);
     }
- 
+
     /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
@@ -211,7 +211,7 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 1.2s;
     }
- 
+
     .scroll-line {
       width: 40px;
       height: 1px;
@@ -219,7 +219,7 @@
       position: relative;
       overflow: hidden;
     }
- 
+
     .scroll-line::after {
       content: '';
       position: absolute;
@@ -230,7 +230,7 @@
       background: var(--accent);
       animation: scanLine 2s ease-in-out infinite;
     }
- 
+
     /* SECTIONS */
     section {
       position: relative;
@@ -239,7 +239,7 @@
       margin: 0 auto;
       padding: 6rem 4rem;
     }
- 
+
     .section-label {
       font-family: var(--font-mono);
       font-size: 0.72rem;
@@ -248,7 +248,7 @@
       text-transform: uppercase;
       margin-bottom: 0.75rem;
     }
- 
+
     .section-title {
       font-family: var(--font-display);
       font-size: clamp(2rem, 4vw, 3rem);
@@ -256,21 +256,21 @@
       margin-bottom: 1rem;
       line-height: 1.1;
     }
- 
+
     .section-divider {
       width: 48px;
       height: 2px;
       background: var(--accent);
       margin-bottom: 3rem;
     }
- 
+
     /* SKILLS */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
     }
- 
+
     .skill-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -280,7 +280,7 @@
       position: relative;
       overflow: hidden;
     }
- 
+
     .skill-card::before {
       content: '';
       position: absolute;
@@ -290,19 +290,19 @@
       background: var(--accent);
       transition: height 0.3s ease;
     }
- 
+
     .skill-card:hover::before { height: 100%; }
     .skill-card:hover {
       border-color: var(--accent);
       transform: translateY(-3px);
       box-shadow: 0 12px 32px rgba(0,0,0,0.3);
     }
- 
+
     .skill-icon {
       font-size: 1.5rem;
       margin-bottom: 0.75rem;
     }
- 
+
     .skill-name {
       font-family: var(--font-mono);
       font-size: 0.85rem;
@@ -310,20 +310,20 @@
       font-weight: 500;
       margin-bottom: 0.25rem;
     }
- 
+
     .skill-desc {
       font-size: 0.8rem;
       color: var(--text-muted);
       line-height: 1.5;
     }
- 
+
     /* PORTFOLIO */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 1.5rem;
     }
- 
+
     .portfolio-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -333,7 +333,7 @@
       position: relative;
       overflow: hidden;
     }
- 
+
     .portfolio-card::after {
       content: '';
       position: absolute;
@@ -344,14 +344,14 @@
       transform-origin: left;
       transition: transform 0.3s ease;
     }
- 
+
     .portfolio-card:hover::after { transform: scaleX(1); }
     .portfolio-card:hover {
       border-color: var(--surface2);
       transform: translateY(-4px);
       box-shadow: 0 16px 48px rgba(0,0,0,0.4);
     }
- 
+
     .card-tag {
       display: inline-block;
       font-family: var(--font-mono);
@@ -365,7 +365,7 @@
       text-transform: uppercase;
       margin-bottom: 1rem;
     }
- 
+
     .card-title {
       font-family: var(--font-display);
       font-size: 1.3rem;
@@ -373,21 +373,21 @@
       margin-bottom: 0.75rem;
       line-height: 1.2;
     }
- 
+
     .card-desc {
       font-size: 0.88rem;
       color: var(--text-muted);
       line-height: 1.7;
       margin-bottom: 1.25rem;
     }
- 
+
     .card-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
       margin-bottom: 1.5rem;
     }
- 
+
     .meta-tag {
       font-family: var(--font-mono);
       font-size: 0.68rem;
@@ -396,12 +396,12 @@
       border-radius: 3px;
       padding: 0.2rem 0.5rem;
     }
- 
+
     .card-highlights {
       list-style: none;
       margin-bottom: 1.5rem;
     }
- 
+
     .card-highlights li {
       font-size: 0.82rem;
       color: var(--text-muted);
@@ -410,9 +410,9 @@
       position: relative;
       border-bottom: 1px solid var(--border);
     }
- 
+
     .card-highlights li:last-child { border-bottom: none; }
- 
+
     .card-highlights li::before {
       content: '→';
       position: absolute;
@@ -420,7 +420,7 @@
       color: var(--accent);
       font-size: 0.75rem;
     }
- 
+
     /* ABOUT */
     .about-grid {
       display: grid;
@@ -428,25 +428,25 @@
       gap: 4rem;
       align-items: start;
     }
- 
+
     .about-text p {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.85;
       margin-bottom: 1.25rem;
     }
- 
+
     .about-text p strong {
       color: var(--text);
       font-weight: 500;
     }
- 
+
     .about-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
- 
+
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -454,7 +454,7 @@
       padding: 1.5rem;
       text-align: center;
     }
- 
+
     .stat-number {
       font-family: var(--font-display);
       font-size: 2.5rem;
@@ -462,7 +462,7 @@
       line-height: 1;
       margin-bottom: 0.5rem;
     }
- 
+
     .stat-label {
       font-family: var(--font-mono);
       font-size: 0.72rem;
@@ -470,7 +470,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
- 
+
     /* CONTACT */
     .contact-inner {
       background: var(--surface);
@@ -483,25 +483,25 @@
       flex-wrap: wrap;
       gap: 2rem;
     }
- 
+
     .contact-text h3 {
       font-family: var(--font-display);
       font-size: 2rem;
       color: var(--text);
       margin-bottom: 0.5rem;
     }
- 
+
     .contact-text p {
       color: var(--text-muted);
       font-size: 0.9rem;
     }
- 
+
     .contact-links {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
- 
+
     /* FOOTER */
     footer {
       position: relative;
@@ -513,31 +513,31 @@
       font-size: 0.75rem;
       color: var(--text-dim);
     }
- 
+
     /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
- 
+
     @keyframes scanLine {
       0% { left: -100%; }
       50% { left: 100%; }
       100% { left: 100%; }
     }
- 
+
     /* Intersection observer classes */
     .reveal {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
- 
+
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
- 
+
     /* Responsive */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
@@ -550,7 +550,7 @@
   </style>
 </head>
 <body>
- 
+
   <!-- NAV -->
   <nav>
     <div class="nav-logo">bp.qa</div>
@@ -561,7 +561,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
- 
+
   <!-- HERO -->
   <div class="hero">
     <div class="hero-tag">// QA Engineer — Victoria, BC</div>
@@ -585,7 +585,7 @@
       Scroll to explore
     </div>
   </div>
- 
+
   <!-- ABOUT -->
   <section id="about">
     <div class="reveal">
@@ -596,19 +596,19 @@
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
-          I've been breaking software professionally for <strong>over 20 years</strong> — and I still find it
+          I've been breaking software professionally for <strong>over 20 years</strong>. I still find it
           satisfying every time something fails in a way nobody expected. Good QA isn't about following a checklist.
           It's about understanding what the application is supposed to do, what it actually does, and why the gap between
           those two things matters.
         </p>
         <p>
           My background spans <strong>manual testing, test planning, defect analysis, and documentation review</strong>.
-          I'm currently building out my automation skillset with Selenium, Postman, and Python — because the best
+          I'm currently building out my automation skillset with Selenium, Postman, and Python. The best
           testers in the next decade will be the ones who can do both.
         </p>
         <p>
           I'm based in <strong>Victoria, BC</strong> and open to remote and hybrid opportunities across Canada.
-          My longer term interest is in <strong>AI quality assurance and auditing</strong> — a field that needs
+          My longer term interest is in <strong>AI quality assurance and auditing</strong>. It's a field that needs
           people who can think critically about system behavior, not just run scripts against it.
         </p>
       </div>
@@ -632,7 +632,7 @@
       </div>
     </div>
   </section>
- 
+
   <!-- SKILLS -->
   <section id="skills">
     <div class="reveal">
@@ -673,7 +673,7 @@
       </div>
     </div>
   </section>
- 
+
   <!-- PORTFOLIO -->
   <section id="portfolio">
     <div class="reveal">
@@ -682,10 +682,10 @@
       <div class="section-divider"></div>
     </div>
     <div class="portfolio-grid">
- 
+
       <div class="portfolio-card reveal">
         <div class="card-tag">Defect Analysis</div>
-        <div class="card-title">EDD Findings Report — Loan Management System</div>
+        <div class="card-title">EDD Findings Report: Loan Management System</div>
         <div class="card-desc">
           A comprehensive audit of a web-based banking application's external design documentation
           against the live application and internal design spec. Produced a prioritized findings
@@ -705,10 +705,10 @@
           <li>Produced severity-classified prioritized defect report</li>
         </ul>
       </div>
- 
+
       <div class="portfolio-card reveal">
         <div class="card-tag">Test Planning</div>
-        <div class="card-title">Application Test Plan — Loan Management System</div>
+        <div class="card-title">Application Test Plan: Loan Management System</div>
         <div class="card-desc">
           A full test plan for a web-based loan prequalification application, following
           industry-standard test plan structure. Covers functional overview, risk assessment,
@@ -726,10 +726,10 @@
           <li>Entry and exit criteria defined for test execution</li>
         </ul>
       </div>
- 
+
       <div class="portfolio-card reveal">
         <div class="card-tag">Test Cases</div>
-        <div class="card-title">Traceability Matrix — Add Customer Page</div>
+        <div class="card-title">Traceability Matrix: Add Customer Page</div>
         <div class="card-desc">
           A structured traceability matrix mapping 37 test scenarios to the Customer Personal
           Data section of a loan management application's Add Customer page. Covers mandatory
@@ -747,10 +747,10 @@
           <li>Full save and cancel scenario coverage</li>
         </ul>
       </div>
- 
+
       <div class="portfolio-card reveal">
         <div class="card-tag">Requirements & User Stories</div>
-        <div class="card-title">User Story Analysis — My Profile Page</div>
+        <div class="card-title">User Story Analysis: My Profile Page</div>
         <div class="card-desc">
           Analysis of an original user story for a profile management feature, identifying
           seven specification gaps and producing a revised user story with five Given-When-Then
@@ -768,10 +768,10 @@
           <li>Covered image upload, field validation, and cancel behavior</li>
         </ul>
       </div>
- 
+
     </div>
   </section>
- 
+
   <!-- CONTACT -->
   <section id="contact">
     <div class="reveal">
@@ -797,12 +797,12 @@
       </div>
     </div>
   </section>
- 
+
   <!-- FOOTER -->
   <footer>
     <p>© 2026 Przemyslaw "Brian" Pawlak &nbsp;·&nbsp; QA Engineer &nbsp;·&nbsp; Victoria, BC</p>
   </footer>
- 
+
   <script>
     // Intersection Observer for reveal animations
     const observer = new IntersectionObserver((entries) => {
@@ -815,14 +815,14 @@
         }
       });
     }, { threshold: 0.1 });
- 
+
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
- 
+
     // Stagger children in grids
     document.querySelectorAll('.skills-grid .skill-card, .portfolio-grid .portfolio-card').forEach((el, i) => {
       el.style.transitionDelay = `${(i % 3) * 0.1}s`;
     });
   </script>
- 
+
 </body>
 </html>
