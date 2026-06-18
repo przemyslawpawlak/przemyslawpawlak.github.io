@@ -5,1022 +5,1083 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pawlak QA & Consulting</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
-  :root{
-    --ink:#14181c;
-    --ink-2:#1c2128;
-    --paper:#f4f2ec;
-    --paper-dim:#e9e6da;
-    --pass:#3a5a40;
-    --pass-bright:#5b8c5a;
-    --flag:#9c3d3d;
-    --slate:#8b9099;
-    --rule:#33393f;
-    --rule-light:#d4cfc0;
-  }
+:root{
+--ink:#14181c;
+--ink-2:#1c2128;
+--paper:#f4f2ec;
+--paper-dim:#e9e6da;
+--pass:#3a5a40;
+--pass-bright:#5b8c5a;
+--flag:#9c3d3d;
+--slate:#8b9099;
+--rule:#33393f;
+--rule-light:#d4cfc0;
+--grid-line:#262b32;
+}
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--ink);
-    color:var(--paper);
-    font-family:'IBM Plex Sans', sans-serif;
-    line-height:1.68;
-    letter-spacing:0.012em;
-    -webkit-font-smoothing:antialiased;
-  }
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+margin:0;
+background:var(--ink);
+color:var(--paper);
+font-family:'IBM Plex Sans', sans-serif;
+line-height:1.68;
+letter-spacing:0.012em;
+-webkit-font-smoothing:antialiased;
+position:relative;
+}
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
-  }
+/* Grid background — matches index.html's texture */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(var(--grid-line) 1px, transparent 1px),
+linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+background-size:48px 48px;
+opacity:0.3;
+pointer-events:none;
+z-index:0;
+}
 
-  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+header, .wrap, footer{position:relative; z-index:1;}
 
-  /* ---------- utility / report chrome ---------- */
-  .meta-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--slate);
-  }
+@media (prefers-reduced-motion: reduce){
+*{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+}
 
-  .status-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    padding:3px 9px;
-    border-radius:3px;
-    border:1px solid currentColor;
-  }
-  .status-tag.pass{color:var(--pass-bright); background:rgba(91,140,90,0.08);}
-  .status-tag.flag{color:#c97a7a; background:rgba(156,61,61,0.08);}
-  .status-tag .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;}
+.wrap{max-width:920px; margin:0 auto; padding:0 28px;}
 
-  hr.rule{
-    border:none;
-    border-top:1px solid var(--rule);
-    margin:0;
-  }
+/* ---------- utility / report chrome ---------- */
+.meta-label{
+font-family:'IBM Plex Mono', monospace;
+font-size:12px;
+letter-spacing:0.12em;
+text-transform:uppercase;
+color:var(--slate);
+}
 
-  /* ---------- header / nav ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(20,24,28,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--rule);
-  }
-  .header-inner{
-    max-width:920px; margin:0 auto; padding:16px 28px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .brand{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:14px; letter-spacing:0.04em;
-    color:var(--paper);
-    display:flex; align-items:baseline; gap:8px;
-  }
-  .brand .mark{color:var(--pass-bright);}
-  nav a{
-    color:var(--slate);
-    text-decoration:none;
-    font-size:13px;
-    margin-left:22px;
-    font-family:'IBM Plex Mono', monospace;
-    transition:color 0.15s ease;
-  }
-  nav a:hover, nav a:focus-visible{color:var(--paper);}
-  nav{display:flex;}
-  @media (max-width:640px){ nav a{margin-left:14px; font-size:12px;} }
+.status-tag{
+display:inline-flex;
+align-items:center;
+gap:6px;
+font-family:'IBM Plex Mono', monospace;
+font-size:11px;
+letter-spacing:0.08em;
+text-transform:uppercase;
+padding:3px 9px;
+border-radius:3px;
+border:1px solid currentColor;
+}
+.status-tag.pass{color:var(--pass-bright); background:rgba(91,140,90,0.08);}
+.status-tag.flag{color:#c97a7a; background:rgba(156,61,61,0.08);}
+.status-tag .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;}
 
-  /* ---------- hero ---------- */
-  .hero{
-    padding:88px 0 64px;
-    position:relative;
-  }
-  .case-id{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12.5px;
-    color:var(--slate);
-    letter-spacing:0.08em;
-    margin-bottom:22px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .case-id .blink{
-    width:7px;height:7px;border-radius:50%;
-    background:var(--pass-bright);
-    animation:pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse{
-    0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(91,140,90,0.5);}
-    50%{opacity:0.6; box-shadow:0 0 0 6px rgba(91,140,90,0);}
-  }
+hr.rule{
+border:none;
+border-top:1px solid var(--rule);
+margin:0;
+}
 
-  h1.hero-headline{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:clamp(34px, 5.4vw, 56px);
-    line-height:1.08;
-    letter-spacing:-0.01em;
-    margin:0 0 26px;
-    max-width:780px;
-  }
-  h1.hero-headline em{
-    font-style:italic;
-    color:var(--pass-bright);
-  }
+/* ---------- header / nav ---------- */
+header{
+position:sticky; top:0; z-index:50;
+background:rgba(20,24,28,0.92);
+backdrop-filter:blur(6px);
+border-bottom:1px solid var(--rule);
+}
+.header-inner{
+max-width:920px; margin:0 auto; padding:16px 28px;
+display:flex; align-items:center; justify-content:space-between;
+}
+.brand{
+font-family:'IBM Plex Mono', monospace;
+font-size:14px; letter-spacing:0.04em;
+color:var(--paper);
+display:flex; align-items:baseline; gap:8px;
+}
+.brand .mark{color:var(--pass-bright);}
+nav a{
+color:var(--slate);
+text-decoration:none;
+font-size:13px;
+margin-left:22px;
+font-family:'IBM Plex Mono', monospace;
+transition:color 0.15s ease;
+}
+nav a:hover, nav a:focus-visible{color:var(--paper);}
+nav{display:flex;}
+@media (max-width:640px){ nav a{margin-left:14px; font-size:12px;} }
 
-  .hero-sub{
-    font-size:18px;
-    line-height:1.65;
-    letter-spacing:0.01em;
-    color:#cdc9bc;
-    max-width:600px;
-    margin:0 0 36px;
-    font-weight:400;
-  }
+/* ---------- hero ---------- */
+.hero{
+padding:88px 0 64px;
+position:relative;
+}
+.case-id{
+font-family:'IBM Plex Mono', monospace;
+font-size:12.5px;
+color:var(--slate);
+letter-spacing:0.08em;
+margin-bottom:22px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+.case-id .blink{
+width:7px;height:7px;border-radius:50%;
+background:var(--pass-bright);
+animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{
+0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(91,140,90,0.5);}
+50%{opacity:0.6; box-shadow:0 0 0 6px rgba(91,140,90,0);}
+}
 
-  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px;}
-  .btn{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13.5px;
-    letter-spacing:0.03em;
-    padding:13px 22px;
-    border-radius:3px;
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    transition:transform 0.15s ease, background 0.15s ease;
-  }
-  .btn-primary{
-    background:var(--pass-bright);
-    color:#0e1410;
-    font-weight:600;
-  }
-  .btn-primary:hover{background:#6ea06c; transform:translateY(-1px);}
-  .btn-ghost{
-    border:1px solid var(--rule);
-    color:var(--paper);
-  }
-  .btn-ghost:hover{border-color:var(--slate); transform:translateY(-1px);}
+h1.hero-headline{
+font-family:'Fraunces', serif;
+font-weight:600;
+font-size:clamp(34px, 5.4vw, 56px);
+line-height:1.08;
+letter-spacing:-0.01em;
+margin:0 0 26px;
+max-width:780px;
+}
+h1.hero-headline em{
+font-style:italic;
+color:var(--pass-bright);
+}
 
-  .hero-strip{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    border-top:1px solid var(--rule);
-    border-bottom:1px solid var(--rule);
-  }
-  .hero-strip div{
-    padding:26px 20px 28px;
-    border-right:1px solid var(--rule);
-  }
-  .hero-strip div:first-child{padding-left:0;}
-  .hero-strip div:last-child{border-right:none;}
-  .hero-strip .num{
-    font-family:'Fraunces', serif;
-    font-size:30px;
-    color:var(--pass-bright);
-    display:block;
-    margin-bottom:10px;
-    line-height:1;
-  }
-  .hero-strip .lbl{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--slate);
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    display:block;
-  }
-  @media (max-width:640px){
-    .hero-strip{grid-template-columns:repeat(2,1fr);}
-    .hero-strip div{padding:22px 16px 24px;}
-    .hero-strip div:nth-child(odd){padding-left:0;}
-  }
+.hero-sub{
+font-size:18px;
+line-height:1.65;
+letter-spacing:0.01em;
+color:#cdc9bc;
+max-width:600px;
+margin:0 0 36px;
+font-weight:400;
+}
 
-  /* ---------- section scaffolding ---------- */
-  section{padding:80px 0;}
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    margin-bottom:14px;
-    gap:16px;
-    flex-wrap:wrap;
-  }
-  .section-num{
-    font-family:'IBM Plex Mono', monospace;
-    color:var(--slate);
-    font-size:13px;
-  }
-  h2.section-title{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:clamp(26px, 3.4vw, 36px);
-    margin:0 0 6px;
-    letter-spacing:-0.01em;
-  }
-  .section-desc{
-    color:#b8b4a6;
-    max-width:620px;
-    font-size:15.5px;
-    line-height:1.7;
-    letter-spacing:0.008em;
-    margin-bottom:44px;
-  }
+.hero-actions{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px;}
+.btn{
+font-family:'IBM Plex Mono', monospace;
+font-size:13.5px;
+letter-spacing:0.03em;
+padding:13px 22px;
+border-radius:3px;
+text-decoration:none;
+display:inline-flex;
+align-items:center;
+gap:8px;
+transition:transform 0.15s ease, background 0.15s ease;
+}
+.btn-primary{
+background:var(--pass-bright);
+color:#0e1410;
+font-weight:600;
+}
+.btn-primary:hover{background:#6ea06c; transform:translateY(-1px);}
+.btn-ghost{
+border:1px solid var(--rule);
+color:var(--paper);
+}
+.btn-ghost:hover{border-color:var(--slate); transform:translateY(-1px);}
 
-  /* ---------- services ---------- */
-  .service-list{display:flex; flex-direction:column;}
-  .service{
-    padding:32px 0;
-    border-bottom:1px solid var(--rule);
-    display:grid;
-    grid-template-columns:200px 1fr;
-    gap:28px;
-  }
-  .service:first-child{border-top:1px solid var(--rule);}
-  @media (max-width:700px){
-    .service{grid-template-columns:1fr;}
-  }
-  .service-tag-col{display:flex; flex-direction:column; gap:10px;}
-  .service-name{
-    font-family:'Fraunces', serif;
-    font-size:21px;
-    font-weight:600;
-    color:var(--paper);
-  }
-  .service-body p{
-    margin:0 0 14px;
-    color:#cdc9bc;
-    font-size:15px;
-    line-height:1.72;
-    letter-spacing:0.008em;
-  }
-  .service-body p:last-of-type{margin-bottom:16px;}
-  .coverage-list{
-    list-style:none;
-    margin:18px 0 16px;
-    padding:14px 16px;
-    background:rgba(255,255,255,0.02);
-    border:1px solid var(--rule);
-    border-radius:3px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:6px 18px;
-  }
-  @media (max-width:560px){
-    .coverage-list{grid-template-columns:1fr;}
-  }
-  .coverage-list li{
-    font-size:13px;
-    color:#cdc9bc;
-    display:flex;
-    align-items:flex-start;
-    gap:8px;
-    padding:3px 0;
-  }
-  .coverage-list li::before{
-    content:"";
-    width:13px; height:13px;
-    flex:none;
-    margin-top:2px;
-    border:1.5px solid var(--pass-bright);
-    border-radius:2px;
-    background:rgba(91,140,90,0.12);
-  }
+.hero-strip{
+display:grid;
+grid-template-columns:repeat(4, 1fr);
+border-top:1px solid var(--rule);
+border-bottom:1px solid var(--rule);
+}
+.hero-strip div{
+padding:26px 20px 28px;
+border-right:1px solid var(--rule);
+}
+.hero-strip div:first-child{padding-left:0;}
+.hero-strip div:last-child{border-right:none;}
+.hero-strip .num{
+font-family:'Fraunces', serif;
+font-size:30px;
+color:var(--pass-bright);
+display:block;
+margin-bottom:10px;
+line-height:1;
+}
+.hero-strip .lbl{
+font-family:'IBM Plex Mono', monospace;
+font-size:11px;
+color:var(--slate);
+text-transform:uppercase;
+letter-spacing:0.06em;
+display:block;
+}
+@media (max-width:640px){
+.hero-strip{grid-template-columns:repeat(2,1fr);}
+.hero-strip div{padding:22px 16px 24px;}
+.hero-strip div:nth-child(odd){padding-left:0;}
+}
 
-  .note-box{
-    font-size:13.5px;
-    color:#a89f8c;
-    font-style:italic;
-    border-left:2px solid var(--rule-light);
-    padding-left:14px;
-    margin:14px 0;
-  }
-  .best-for{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--slate);
-    letter-spacing:0.02em;
-  }
-  .best-for b{color:#cdc9bc; font-weight:500;}
+/* ---------- section scaffolding ---------- */
+section{padding:80px 0;}
+.section-head{
+display:flex;
+align-items:baseline;
+justify-content:space-between;
+margin-bottom:14px;
+gap:16px;
+flex-wrap:wrap;
+}
+.section-num{
+font-family:'IBM Plex Mono', monospace;
+color:var(--slate);
+font-size:13px;
+}
+h2.section-title{
+font-family:'Fraunces', serif;
+font-weight:600;
+font-size:clamp(26px, 3.4vw, 36px);
+margin:0 0 6px;
+letter-spacing:-0.01em;
+}
+.section-desc{
+color:#b8b4a6;
+max-width:620px;
+font-size:15.5px;
+line-height:1.7;
+letter-spacing:0.008em;
+margin-bottom:44px;
+}
 
-  /* ---------- pricing subsections ---------- */
-  .pricing-subhead{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-bottom:22px;
-  }
-  .pricing-subhead .meta-label{color:var(--pass-bright);}
-  .pricing-subhead .line{
-    flex:1;
-    height:1px;
-    background:var(--rule);
-  }
-  .pricing-divider{
-    margin:48px 0 40px;
-    display:flex;
-    align-items:center;
-    gap:14px;
-  }
-  .pricing-divider .line{flex:1; height:1px; background:var(--rule);}
-  .pricing-divider .meta-label{color:var(--slate);}
+/* ---------- services ---------- */
+.service-list{display:flex; flex-direction:column;}
+.service{
+padding:32px 0;
+border-bottom:1px solid var(--rule);
+display:grid;
+grid-template-columns:200px 1fr;
+gap:28px;
+}
+.service:first-child{border-top:1px solid var(--rule);}
+@media (max-width:700px){
+.service{grid-template-columns:1fr;}
+}
+.service-tag-col{display:flex; flex-direction:column; gap:10px;}
+.service-name{
+font-family:'Fraunces', serif;
+font-size:21px;
+font-weight:600;
+color:var(--paper);
+}
+.service-body p{
+margin:0 0 14px;
+color:#cdc9bc;
+font-size:15px;
+line-height:1.72;
+letter-spacing:0.008em;
+}
+.service-body p:last-of-type{margin-bottom:16px;}
+.coverage-list{
+list-style:none;
+margin:18px 0 16px;
+padding:14px 16px;
+background:rgba(255,255,255,0.02);
+border:1px solid var(--rule);
+border-radius:3px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px 18px;
+}
+@media (max-width:560px){
+.coverage-list{grid-template-columns:1fr;}
+}
+.coverage-list li{
+font-size:13px;
+color:#cdc9bc;
+display:flex;
+align-items:flex-start;
+gap:8px;
+padding:3px 0;
+}
+.coverage-list li::before{
+content:"";
+width:13px; height:13px;
+flex:none;
+margin-top:2px;
+border:1.5px solid var(--pass-bright);
+border-radius:2px;
+background:rgba(91,140,90,0.12);
+}
 
-  .consult-card{
-    border:1px solid var(--rule);
-    background:var(--ink-2);
-    padding:28px 30px;
-    display:grid;
-    grid-template-columns:160px 1fr 180px;
-    gap:28px;
-    align-items:start;
-    margin-bottom:8px;
-  }
-  @media (max-width:760px){
-    .consult-card{grid-template-columns:1fr; gap:16px;}
-  }
-  .consult-card .tier-price{margin-bottom:4px; font-size:30px;}
-  .consult-card .tier-hours{margin-bottom:0;}
-  .consult-card .consult-body p{
-    color:#cdc9bc; font-size:14.5px; line-height:1.7; letter-spacing:0.008em; margin:0 0 10px;
-  }
-  .consult-card .consult-body p:last-child{margin-bottom:0;}
-  .consult-stages{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-top:10px;
-  }
-  .consult-stages span{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    color:var(--slate);
-    border:1px solid var(--rule);
-    padding:3px 8px;
-    border-radius:2px;
-    white-space:nowrap;
-  }
-  .consult-hourly{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--slate);
-  }
-  .consult-hourly b{color:var(--pass-bright);}
+.note-box{
+font-size:13.5px;
+color:#a89f8c;
+font-style:italic;
+border-left:2px solid var(--rule-light);
+padding-left:14px;
+margin:14px 0;
+}
+.best-for{
+font-family:'IBM Plex Mono', monospace;
+font-size:12px;
+color:var(--slate);
+letter-spacing:0.02em;
+}
+.best-for b{color:#cdc9bc; font-weight:500;}
 
+/* ---------- pricing subsections ---------- */
+.pricing-subhead{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:22px;
+}
+.pricing-subhead .meta-label{color:var(--pass-bright);}
+.pricing-subhead .line{
+flex:1;
+height:1px;
+background:var(--rule);
+}
+.pricing-divider{
+margin:48px 0 40px;
+display:flex;
+align-items:center;
+gap:14px;
+}
+.pricing-divider .line{flex:1; height:1px; background:var(--rule);}
+.pricing-divider .meta-label{color:var(--slate);}
 
-  .pricing-grid{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:1px;
-    background:var(--rule);
-    border:1px solid var(--rule);
-  }
-  @media (max-width:860px){ .pricing-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:480px){ .pricing-grid{grid-template-columns:1fr;} }
+.consult-card{
+border:1px solid var(--rule);
+background:var(--ink-2);
+padding:28px 30px;
+display:grid;
+grid-template-columns:160px 1fr 180px;
+gap:28px;
+align-items:start;
+margin-bottom:8px;
+}
+@media (max-width:760px){
+.consult-card{grid-template-columns:1fr; gap:16px;}
+}
+.consult-card .tier-price{margin-bottom:4px; font-size:30px;}
+.consult-card .tier-hours{margin-bottom:0;}
+.consult-card .consult-body p{
+color:#cdc9bc; font-size:14.5px; line-height:1.7; letter-spacing:0.008em; margin:0 0 10px;
+}
+.consult-card .consult-body p:last-child{margin-bottom:0;}
+.consult-stages{
+display:flex;
+flex-wrap:wrap;
+gap:6px;
+margin-top:10px;
+}
+.consult-stages span{
+font-family:'IBM Plex Mono', monospace;
+font-size:10.5px;
+color:var(--slate);
+border:1px solid var(--rule);
+padding:3px 8px;
+border-radius:2px;
+white-space:nowrap;
+}
+.consult-hourly{
+font-family:'IBM Plex Mono', monospace;
+font-size:12px;
+color:var(--slate);
+}
+.consult-hourly b{color:var(--pass-bright);}
 
-  .tier{
-    background:var(--ink-2);
-    padding:28px 22px 26px;
-    display:flex;
-    flex-direction:column;
-  }
-  .tier.featured{background:#202820; position:relative;}
-  .tier.featured::before{
-    content:"RECOMMENDED";
-    position:absolute; top:0; left:0; right:0;
-    background:var(--pass-bright);
-    color:#0e1410;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10px;
-    letter-spacing:0.1em;
-    text-align:center;
-    padding:5px 0;
-    font-weight:600;
-  }
-  .tier.featured{padding-top:48px;}
+.pricing-grid{
+display:grid;
+grid-template-columns:repeat(4, 1fr);
+gap:1px;
+background:var(--rule);
+border:1px solid var(--rule);
+}
+@media (max-width:860px){ .pricing-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:480px){ .pricing-grid{grid-template-columns:1fr;} }
 
-  .tier-name{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--slate);
-    margin-bottom:10px;
-  }
-  .tier-price{
-    font-family:'Fraunces', serif;
-    font-size:34px;
-    font-weight:600;
-    color:var(--paper);
-    margin-bottom:4px;
-  }
-  .tier-price .unit{font-size:14px; color:var(--slate); font-family:'IBM Plex Sans',sans-serif; font-weight:400;}
-  .tier-hours{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    color:var(--pass-bright);
-    margin-bottom:18px;
-  }
-  .tier ul{
-    list-style:none; padding:0; margin:0 0 20px;
-    font-size:13.5px;
-    color:#cdc9bc;
-    flex-grow:1;
-  }
-  .tier li{
-    padding:7px 0;
-    border-top:1px solid var(--rule);
-    display:flex; gap:8px;
-  }
-  .tier li:first-child{border-top:none;}
-  .tier li::before{content:"✓"; color:var(--pass-bright); flex:none; font-size:12px; margin-top:1px;}
-  .tier-best{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--slate);
-    margin-top:auto;
-  }
+.tier{
+background:var(--ink-2);
+padding:28px 22px 26px;
+display:flex;
+flex-direction:column;
+}
+.tier.featured{background:#202820; position:relative;}
+.tier.featured::before{
+content:"RECOMMENDED";
+position:absolute; top:0; left:0; right:0;
+background:var(--pass-bright);
+color:#0e1410;
+font-family:'IBM Plex Mono', monospace;
+font-size:10px;
+letter-spacing:0.1em;
+text-align:center;
+padding:5px 0;
+font-weight:600;
+}
+.tier.featured{padding-top:48px;}
 
-  .payment-note{
-    margin-top:28px;
-    font-size:13.5px;
-    color:#a89f8c;
-    border-top:1px solid var(--rule);
-    padding-top:22px;
-  }
-  .payment-note b{color:#cdc9bc;}
+.tier-name{
+font-family:'IBM Plex Mono', monospace;
+font-size:12px;
+letter-spacing:0.08em;
+text-transform:uppercase;
+color:var(--slate);
+margin-bottom:10px;
+}
+.tier-price{
+font-family:'Fraunces', serif;
+font-size:34px;
+font-weight:600;
+color:var(--paper);
+margin-bottom:4px;
+}
+.tier-price .unit{font-size:14px; color:var(--slate); font-family:'IBM Plex Sans',sans-serif; font-weight:400;}
+.tier-hours{
+font-family:'IBM Plex Mono', monospace;
+font-size:11.5px;
+color:var(--pass-bright);
+margin-bottom:18px;
+}
+.tier ul{
+list-style:none; padding:0; margin:0 0 20px;
+font-size:13.5px;
+color:#cdc9bc;
+flex-grow:1;
+}
+.tier li{
+padding:7px 0;
+border-top:1px solid var(--rule);
+display:flex; gap:8px;
+}
+.tier li:first-child{border-top:none;}
+.tier li::before{content:"✓"; color:var(--pass-bright); flex:none; font-size:12px; margin-top:1px;}
+.tier-best{
+font-family:'IBM Plex Mono', monospace;
+font-size:11px;
+color:var(--slate);
+margin-top:auto;
+}
 
-  /* ---------- why me ---------- */
-  .why-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
-  @media (max-width:700px){ .why-grid{grid-template-columns:1fr; gap:32px;} }
-  .why-block .why-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--pass-bright);
-    margin-bottom:12px;
-  }
-  .why-block p{color:#cdc9bc; font-size:15px; line-height:1.72; letter-spacing:0.008em; margin:0 0 12px;}
-  .credit-line{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    color:var(--slate);
-    line-height:1.9;
-  }
-  .closing-statement{
-    margin-top:40px;
-    padding-top:32px;
-    border-top:1px solid var(--rule);
-    font-family:'Fraunces', serif;
-    font-size:20px;
-    font-style:italic;
-    color:var(--paper);
-    max-width:680px;
-  }
+.payment-note{
+margin-top:28px;
+font-size:13.5px;
+color:#a89f8c;
+border-top:1px solid var(--rule);
+padding-top:22px;
+}
+.payment-note b{color:#cdc9bc;}
 
-  /* ---------- process ---------- */
-  .process-list{counter-reset:step;}
-  .step{
-    display:grid;
-    grid-template-columns:60px 1fr;
-    gap:20px;
-    padding:22px 0;
-    border-top:1px solid var(--rule);
-  }
-  .step:last-child{border-bottom:1px solid var(--rule);}
-  .step-num{
-    font-family:'Fraunces', serif;
-    font-size:26px;
-    color:var(--rule-light);
-    opacity:0.45;
-  }
-  .step-title{font-weight:600; color:var(--paper); margin-bottom:5px; font-size:15.5px;}
-  .step-desc{color:#b8b4a6; font-size:14.5px;}
+/* ---------- why me ---------- */
+.why-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+@media (max-width:700px){ .why-grid{grid-template-columns:1fr; gap:32px;} }
+.why-block .why-label{
+font-family:'IBM Plex Mono', monospace;
+font-size:11.5px;
+letter-spacing:0.08em;
+text-transform:uppercase;
+color:var(--pass-bright);
+margin-bottom:12px;
+}
+.why-block p{color:#cdc9bc; font-size:15px; line-height:1.72; letter-spacing:0.008em; margin:0 0 12px;}
+.credit-line{
+font-family:'IBM Plex Mono', monospace;
+font-size:13px;
+color:var(--slate);
+line-height:1.9;
+}
+.closing-statement{
+margin-top:40px;
+padding-top:32px;
+border-top:1px solid var(--rule);
+font-family:'Fraunces', serif;
+font-size:20px;
+font-style:italic;
+color:var(--paper);
+max-width:680px;
+}
 
-  /* ---------- form ---------- */
-  .form-card{
-    background:var(--ink-2);
-    border:1px solid var(--rule);
-    padding:36px;
-  }
-  @media (max-width:600px){.form-card{padding:24px;}}
-  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
-  @media (max-width:600px){.form-row{grid-template-columns:1fr;}}
-  .field{display:flex; flex-direction:column; gap:7px;}
-  .field.full{grid-column:1 / -1;}
-  label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-    color:var(--slate);
-  }
-  input, select, textarea{
-    background:var(--ink);
-    border:1px solid var(--rule);
-    color:var(--paper);
-    padding:11px 12px;
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:14px;
-    border-radius:2px;
-  }
-  input:focus, select:focus, textarea:focus{
-    outline:2px solid var(--pass-bright);
-    outline-offset:1px;
-    border-color:var(--pass-bright);
-  }
-  textarea{resize:vertical; min-height:90px;}
-  .form-foot{
-    margin-top:8px;
-    font-size:12.5px;
-    color:#a89f8c;
-    font-style:italic;
-  }
+/* ---------- process ---------- */
+.process-list{counter-reset:step;}
+.step{
+display:grid;
+grid-template-columns:60px 1fr;
+gap:20px;
+padding:22px 0;
+border-top:1px solid var(--rule);
+}
+.step:last-child{border-bottom:1px solid var(--rule);}
+.step-num{
+font-family:'Fraunces', serif;
+font-size:26px;
+color:var(--rule-light);
+opacity:0.45;
+}
+.step-title{font-weight:600; color:var(--paper); margin-bottom:5px; font-size:15.5px;}
+.step-desc{color:#b8b4a6; font-size:14.5px;}
 
-  /* ---------- footer ---------- */
-  footer{
-    border-top:1px solid var(--rule);
-    padding:36px 0;
-  }
-  .footer-inner{
-    display:flex; justify-content:space-between; align-items:center;
-    flex-wrap:wrap; gap:14px;
-  }
-  .footer-inner .meta-label{font-size:11.5px;}
+/* ---------- form ---------- */
+.form-card{
+background:var(--ink-2);
+border:1px solid var(--rule);
+padding:36px;
+}
+@media (max-width:600px){.form-card{padding:24px;}}
+.form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+@media (max-width:600px){.form-row{grid-template-columns:1fr;}}
+.field{display:flex; flex-direction:column; gap:7px;}
+.field.full{grid-column:1 / -1;}
+label{
+font-family:'IBM Plex Mono', monospace;
+font-size:11.5px;
+letter-spacing:0.05em;
+text-transform:uppercase;
+color:var(--slate);
+}
+input, select, textarea{
+background:var(--ink);
+border:1px solid var(--rule);
+color:var(--paper);
+padding:11px 12px;
+font-family:'IBM Plex Sans', sans-serif;
+font-size:14px;
+border-radius:2px;
+}
+input:focus, select:focus, textarea:focus{
+outline:2px solid var(--pass-bright);
+outline-offset:1px;
+border-color:var(--pass-bright);
+}
+textarea{resize:vertical; min-height:90px;}
+.form-foot{
+margin-top:8px;
+font-size:12.5px;
+color:#a89f8c;
+font-style:italic;
+}
 
-  /* generic visible focus for a11y across interactive elements */
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--pass-bright);
-    outline-offset:2px;
-  }
+/* form status — quiet default, loud confirmation */
+#qa-form-status{
+margin-top:16px;
+padding:0;
+border-radius:4px;
+font-style:italic;
+font-size:12.5px;
+color:#a89f8c;
+transition:all 0.2s ease;
+}
+#qa-form-status.status-active{
+padding:14px 16px;
+font-style:normal;
+font-family:'IBM Plex Mono', monospace;
+font-size:13px;
+letter-spacing:0.01em;
+display:flex;
+align-items:center;
+gap:10px;
+}
+#qa-form-status.status-sending{
+background:rgba(139,144,153,0.1);
+border:1px solid var(--rule);
+color:var(--paper);
+}
+#qa-form-status.status-success{
+background:rgba(91,140,90,0.14);
+border:1px solid var(--pass-bright);
+color:var(--pass-bright);
+font-weight:600;
+}
+#qa-form-status.status-error{
+background:rgba(156,61,61,0.14);
+border:1px solid var(--flag);
+color:#e0a0a0;
+font-weight:600;
+}
+
+/* ---------- footer ---------- */
+footer{
+border-top:1px solid var(--rule);
+padding:36px 0;
+}
+.footer-inner{
+display:flex; justify-content:space-between; align-items:center;
+flex-wrap:wrap; gap:14px;
+}
+.footer-inner .meta-label{font-size:11.5px;}
+
+/* generic visible focus for a11y across interactive elements */
+a:focus-visible, button:focus-visible{
+outline:2px solid var(--pass-bright);
+outline-offset:2px;
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="brand"><span class="mark">▪</span> PAWLAK<span style="color:var(--slate)">/</span>QA<span style="color:var(--slate)">+</span>CONSULTING</div>
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#why">Why Me</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
+<div class="header-inner">
+<div class="brand"><span class="mark">▪</span> PAWLAK<span style="color:var(--slate)">/</span>QA<span style="color:var(--slate)">+</span>CONSULTING</div>
+<nav>
+<a href="#services">Services</a>
+<a href="#pricing">Pricing</a>
+<a href="#why">Why Me</a>
+<a href="#contact">Contact</a>
+</nav>
+</div>
 </header>
 
 <div class="wrap">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="case-id"><span class="blink"></span> STATUS: ACCEPTING NEW ENGAGEMENTS — JUNE 2026</div>
-    <h1 class="hero-headline">Great software isn't untested. <em>It's conditioned.</em> I put your project through its paces before your users do.</h1>
-    <p class="hero-sub">Professional software testing for indie developers and small teams who need real QA expertise without the corporate price tag. Flat-rate packages, severity-rated bug reports, no agency markup.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn btn-primary">Request a Quote →</a>
-      <a href="#services" class="btn btn-ghost">View Services</a>
-    </div>
-    <div class="hero-strip">
-      <div><span class="num">20+</span><span class="lbl">Years QA Experience</span></div>
-      <div><span class="num">4</span><span class="lbl">Service Categories</span></div>
-      <div><span class="num">48h</span><span class="lbl">Response Window</span></div>
-      <div><span class="num">100%</span><span class="lbl">Flat-Rate Pricing</span></div>
-    </div>
-  </section>
+<!-- HERO -->
+<section class="hero">
+<div class="case-id"><span class="blink"></span> STATUS: ACCEPTING NEW ENGAGEMENTS — JUNE 2026</div>
+<h1 class="hero-headline">Great software isn't untested. <em>It's conditioned.</em> I put your project through its paces before your users do.</h1>
+<p class="hero-sub">Professional software testing for indie developers and small teams who need real QA expertise without the corporate price tag. Flat-rate packages, severity-rated bug reports, no agency markup.</p>
+<div class="hero-actions">
+<a href="#contact" class="btn btn-primary">Request a Quote →</a>
+<a href="#services" class="btn btn-ghost">View Services</a>
+</div>
+<div class="hero-strip">
+<div><span class="num">20+</span><span class="lbl">Years QA Experience</span></div>
+<div><span class="num">4</span><span class="lbl">Service Categories</span></div>
+<div><span class="num">48h</span><span class="lbl">Response Window</span></div>
+<div><span class="num">100%</span><span class="lbl">Flat-Rate Pricing</span></div>
+</div>
+</section>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="section-head">
-      <div>
-        <div class="section-num">01 / COVERAGE</div>
-        <h2 class="section-title">What gets tested</h2>
-      </div>
-    </div>
-    <p class="section-desc">Four engagement types, one standard of coverage. Every report ships with severity ratings, full reproduction steps, and a complete account of what was — and wasn't — found.</p>
+<!-- SERVICES -->
+<section id="services">
+<div class="section-head">
+<div>
+<div class="section-num">01 / COVERAGE</div>
+<h2 class="section-title">What gets tested</h2>
+</div>
+</div>
+<p class="section-desc">Four engagement types, one standard of coverage. Every report ships with severity ratings, full reproduction steps, and a complete account of what was — and wasn't — found.</p>
 
-    <div class="service-list">
+<div class="service-list">
 
-      <div class="service">
-        <div class="service-tag-col">
-          <span class="status-tag pass"><span class="dot"></span> Available</span>
-          <span class="service-name">Web &amp; SaaS</span>
-        </div>
-        <div class="service-body">
-          <p>Most bugs don't live on the happy path. After 20+ years of professional QA, I test the way experienced users actually behave — different browsers, resolutions, window sizes, unexpected input sequences, and every detour away from the obvious flow before I ever take it.</p>
-          <p>What you get is a professional bug report you can act on immediately. Every issue documented with clear reproduction steps, severity rating, environment details, and expected versus actual results. Coverage summary included so you know exactly what was tested and what wasn't. Any issue that couldn't be reproduced gets a full account of everything attempted — you'll never wonder if something was just missed.</p>
-          <ul class="coverage-list">
-            <li>Cross-browser behavior</li>
-            <li>Multiple resolutions &amp; window sizes</li>
-            <li>Form &amp; input validation</li>
-            <li>User flow &amp; navigation</li>
-            <li>Boundary &amp; edge-case input</li>
-            <li>Session &amp; login behavior</li>
-          </ul>
-          <div class="best-for"><b>Best for:</b> Web applications, SaaS tools, e-commerce stores, client portals, booking systems.</div>
-        </div>
-      </div>
+<div class="service">
+<div class="service-tag-col">
+<span class="status-tag pass"><span class="dot"></span> Available</span>
+<span class="service-name">Web &amp; SaaS</span>
+</div>
+<div class="service-body">
+<p>Most bugs don't live on the happy path. After 20+ years of professional QA, I test the way experienced users actually behave — different browsers, resolutions, window sizes, unexpected input sequences, and every detour away from the obvious flow before I ever take it.</p>
+<p>What you get is a professional bug report you can act on immediately. Every issue documented with clear reproduction steps, severity rating, environment details, and expected versus actual results. Coverage summary included so you know exactly what was tested and what wasn't. Any issue that couldn't be reproduced gets a full account of everything attempted — you'll never wonder if something was just missed.</p>
+<ul class="coverage-list">
+<li>Cross-browser behavior</li>
+<li>Multiple resolutions &amp; window sizes</li>
+<li>Form &amp; input validation</li>
+<li>User flow &amp; navigation</li>
+<li>Boundary &amp; edge-case input</li>
+<li>Session &amp; login behavior</li>
+</ul>
+<div class="best-for"><b>Best for:</b> Web applications, SaaS tools, e-commerce stores, client portals, booking systems.</div>
+</div>
+</div>
 
-      <div class="service">
-        <div class="service-tag-col">
-          <span class="status-tag pass"><span class="dot"></span> Available</span>
-          <span class="service-name">Indie Game</span>
-        </div>
-        <div class="service-body">
-          <p>Games break in places developers never look because developers know exactly how their game is supposed to be played. I interact with it differently — exhausting every available input, every combination of actions, every detour from the intended path before I ever follow a waypoint. And as player abilities and mechanics unlock through progression, the test surface expands — I update my approach accordingly rather than assuming the early game inputs are the only ones that matter.</p>
-          <p>Beyond gameplay, the things that kill a launch get priority attention. Crashes, memory issues, frame rate degradation under load, and anything that makes the game flat out unplayable get flagged first. A game with rough edges ships. A game that crashes on startup doesn't.</p>
-          <ul class="coverage-list">
-            <li>Full input &amp; control coverage</li>
-            <li>Progression-based ability unlocks</li>
-            <li>Crash &amp; stability testing</li>
-            <li>Frame rate under load</li>
-            <li>Save / load integrity</li>
-            <li>Edge-case player behavior</li>
-          </ul>
-          <div class="note-box">For efficient and thorough testing, game engagements require access to debug tools, cheats, or a dev build with level and checkpoint skips. This allows full coverage of content without unnecessary time spent on legitimate playthrough progress, keeping your engagement focused and on schedule.</div>
-          <div class="best-for"><b>Best for:</b> PC indie games, Steam Early Access releases, pre-launch readiness checks, Unity and Godot projects.</div>
-        </div>
-      </div>
+<div class="service">
+<div class="service-tag-col">
+<span class="status-tag pass"><span class="dot"></span> Available</span>
+<span class="service-name">Indie Game</span>
+</div>
+<div class="service-body">
+<p>Games break in places developers never look because developers know exactly how their game is supposed to be played. I interact with it differently — exhausting every available input, every combination of actions, every detour from the intended path before I ever follow a waypoint. And as player abilities and mechanics unlock through progression, the test surface expands — I update my approach accordingly rather than assuming the early game inputs are the only ones that matter.</p>
+<p>Beyond gameplay, the things that kill a launch get priority attention. Crashes, memory issues, frame rate degradation under load, and anything that makes the game flat out unplayable get flagged first. A game with rough edges ships. A game that crashes on startup doesn't.</p>
+<ul class="coverage-list">
+<li>Full input &amp; control coverage</li>
+<li>Progression-based ability unlocks</li>
+<li>Crash &amp; stability testing</li>
+<li>Frame rate under load</li>
+<li>Save / load integrity</li>
+<li>Edge-case player behavior</li>
+</ul>
+<div class="note-box">For efficient and thorough testing, game engagements require access to debug tools, cheats, or a dev build with level and checkpoint skips. This allows full coverage of content without unnecessary time spent on legitimate playthrough progress, keeping your engagement focused and on schedule.</div>
+<div class="best-for"><b>Best for:</b> PC indie games, Steam Early Access releases, pre-launch readiness checks, Unity and Godot projects.</div>
+</div>
+</div>
 
-      <div class="service">
-        <div class="service-tag-col">
-          <span class="status-tag pass"><span class="dot"></span> Available</span>
-          <span class="service-name">Desktop (Windows)</span>
-        </div>
-        <div class="service-body">
-          <p>Desktop apps have a deceptively wide test surface. Every field has limits, every button has expected behavior, every function has edge cases — and without a complete design document covering all of it, testing is guesswork. I work from documentation where it exists and flag the gaps where it doesn't. That gap itself is often where the most interesting bugs live.</p>
-          <p>The same philosophy applies here as everywhere else — the happy path gets tested last. Input boundaries, unexpected sequences, window resizing, multiple monitor configurations, installation and uninstall behavior — everything that a developer focused on core functionality tends to leave until it's too late.</p>
-          <ul class="coverage-list">
-            <li>Field limits &amp; input boundaries</li>
-            <li>Button &amp; function behavior</li>
-            <li>Window resizing / multi-monitor</li>
-            <li>Install &amp; uninstall flow</li>
-            <li>Design doc gap flagging</li>
-            <li>Unexpected input sequences</li>
-          </ul>
-          <div class="best-for"><b>Best for:</b> Windows utilities, productivity tools, niche business software, indie desktop applications.</div>
-        </div>
-      </div>
+<div class="service">
+<div class="service-tag-col">
+<span class="status-tag pass"><span class="dot"></span> Available</span>
+<span class="service-name">Desktop (Windows)</span>
+</div>
+<div class="service-body">
+<p>Desktop apps have a deceptively wide test surface. Every field has limits, every button has expected behavior, every function has edge cases — and without a complete design document covering all of it, testing is guesswork. I work from documentation where it exists and flag the gaps where it doesn't. That gap itself is often where the most interesting bugs live.</p>
+<p>The same philosophy applies here as everywhere else — the happy path gets tested last. Input boundaries, unexpected sequences, window resizing, multiple monitor configurations, installation and uninstall behavior — everything that a developer focused on core functionality tends to leave until it's too late.</p>
+<ul class="coverage-list">
+<li>Field limits &amp; input boundaries</li>
+<li>Button &amp; function behavior</li>
+<li>Window resizing / multi-monitor</li>
+<li>Install &amp; uninstall flow</li>
+<li>Design doc gap flagging</li>
+<li>Unexpected input sequences</li>
+</ul>
+<div class="best-for"><b>Best for:</b> Windows utilities, productivity tools, niche business software, indie desktop applications.</div>
+</div>
+</div>
 
-      <div class="service">
-        <div class="service-tag-col">
-          <span class="status-tag flag"><span class="dot"></span> Android Only</span>
-          <span class="service-name">Mobile</span>
-        </div>
-        <div class="service-body">
-          <p>Android testing available for indie developers and small teams targeting the Google Play market. Testing performed on real Android hardware plus emulator coverage across multiple API levels and screen sizes to catch device-specific behavior that emulators alone won't surface.</p>
-          <p>Same deliverable standard applies — severity-rated bug report, full reproduction steps, coverage summary, and a complete account of anything that resisted reproduction.</p>
-          <ul class="coverage-list">
-            <li>Real device + emulator coverage</li>
-            <li>Multiple API levels &amp; screen sizes</li>
-            <li>Touch input edge cases</li>
-            <li>Performance under load</li>
-            <li>Install &amp; permissions flow</li>
-            <li>Orientation &amp; interruption handling</li>
-          </ul>
-          <div class="note-box">iOS testing not currently available. Android only.</div>
-          <div class="best-for"><b>Best for:</b> Android utilities, indie mobile games, early access and beta builds targeting Google Play.</div>
-        </div>
-      </div>
+<div class="service">
+<div class="service-tag-col">
+<span class="status-tag flag"><span class="dot"></span> Android Only</span>
+<span class="service-name">Mobile</span>
+</div>
+<div class="service-body">
+<p>Android testing available for indie developers and small teams targeting the Google Play market. Testing performed on real Android hardware plus emulator coverage across multiple API levels and screen sizes to catch device-specific behavior that emulators alone won't surface.</p>
+<p>Same deliverable standard applies — severity-rated bug report, full reproduction steps, coverage summary, and a complete account of anything that resisted reproduction.</p>
+<ul class="coverage-list">
+<li>Real device + emulator coverage</li>
+<li>Multiple API levels &amp; screen sizes</li>
+<li>Touch input edge cases</li>
+<li>Performance under load</li>
+<li>Install &amp; permissions flow</li>
+<li>Orientation &amp; interruption handling</li>
+</ul>
+<div class="note-box">iOS testing not currently available. Android only.</div>
+<div class="best-for"><b>Best for:</b> Android utilities, indie mobile games, early access and beta builds targeting Google Play.</div>
+</div>
+</div>
 
-    </div>
-  </section>
+</div>
+</section>
 
-  <hr class="rule">
+<hr class="rule">
 
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="section-head">
-      <div>
-        <div class="section-num">02 / RATES</div>
-        <h2 class="section-title">Pricing</h2>
-      </div>
-    </div>
-    <p class="section-desc">All engagements deliver the same standard: severity-rated bug reports, full reproduction steps, environment details, and a complete coverage summary. You always know what was tested and what was found.</p>
+<!-- PRICING -->
+<section id="pricing">
+<div class="section-head">
+<div>
+<div class="section-num">02 / RATES</div>
+<h2 class="section-title">Pricing</h2>
+</div>
+</div>
+<p class="section-desc">All engagements deliver the same standard: severity-rated bug reports, full reproduction steps, environment details, and a complete coverage summary. You always know what was tested and what was found.</p>
 
-    <div class="pricing-subhead">
-      <span class="meta-label">BEFORE YOU BUILD</span>
-      <div class="line"></div>
-    </div>
+<div class="pricing-subhead">
+<span class="meta-label">BEFORE YOU BUILD</span>
+<div class="line"></div>
+</div>
 
-    <div class="consult-card">
-      <div>
-        <div class="tier-name">Consulting</div>
-        <div class="tier-price">$100<span class="unit"> flat</span></div>
-        <div class="tier-hours">~4–6 HRS COVERAGE</div>
-      </div>
-      <div class="consult-body">
-        <p>For projects that don't exist yet, or exist only as plans, mockups, or early code. A staged engagement to help you build testably from day one and avoid the issues that are expensive to fix later.</p>
-        <div class="consult-stages">
-          <span>1. Intake form</span>
-          <span>2. Discovery call</span>
-          <span>3. Material review</span>
-          <span>4. Written assessment</span>
-        </div>
-      </div>
-      <div>
-        <div class="consult-hourly">Includes report.<br>Follow-up consulting <b>$20/hr</b></div>
-      </div>
-    </div>
+<div class="consult-card">
+<div>
+<div class="tier-name">Consulting</div>
+<div class="tier-price">$100<span class="unit"> flat</span></div>
+<div class="tier-hours">~4–6 HRS COVERAGE</div>
+</div>
+<div class="consult-body">
+<p>For projects that don't exist yet, or exist only as plans, mockups, or early code. A staged engagement to help you build testably from day one and avoid the issues that are expensive to fix later.</p>
+<div class="consult-stages">
+<span>1. Intake form</span>
+<span>2. Discovery call</span>
+<span>3. Material review</span>
+<span>4. Written assessment</span>
+</div>
+</div>
+<div>
+<div class="consult-hourly">Includes report.<br>Follow-up consulting <b>$20/hr</b></div>
+</div>
+</div>
 
-    <div class="pricing-divider">
-      <span class="meta-label">TESTING PACKAGES</span>
-      <div class="line"></div>
-    </div>
+<div class="pricing-divider">
+<span class="meta-label">TESTING PACKAGES</span>
+<div class="line"></div>
+</div>
 
-    <div class="pricing-grid">
+<div class="pricing-grid">
 
-      <div class="tier">
-        <div class="tier-name">Basic</div>
-        <div class="tier-price">$150</div>
-        <div class="tier-hours">~8 HRS COVERAGE</div>
-        <ul>
-          <li>Core functionality &amp; main user flows</li>
-          <li>Single platform</li>
-          <li>Bug report w/ reproduction steps</li>
-        </ul>
-        <div class="tier-best">Best for: early builds, pre-beta checks</div>
-      </div>
+<div class="tier">
+<div class="tier-name">Basic</div>
+<div class="tier-price">$150</div>
+<div class="tier-hours">~8 HRS COVERAGE</div>
+<ul>
+<li>Core functionality &amp; main user flows</li>
+<li>Single platform</li>
+<li>Bug report w/ reproduction steps</li>
+</ul>
+<div class="tier-best">Best for: early builds, pre-beta checks</div>
+</div>
 
-      <div class="tier featured">
-        <div class="tier-name">Standard</div>
-        <div class="tier-price">$250</div>
-        <div class="tier-hours">~12–13 HRS COVERAGE</div>
-        <ul>
-          <li>Edge cases &amp; boundary conditions</li>
-          <li>Multiple configurations / browsers</li>
-          <li>Detailed report + coverage summary</li>
-        </ul>
-        <div class="tier-best">Best for: pre-launch builds nearing release</div>
-      </div>
+<div class="tier featured">
+<div class="tier-name">Standard</div>
+<div class="tier-price">$250</div>
+<div class="tier-hours">~12–13 HRS COVERAGE</div>
+<ul>
+<li>Edge cases &amp; boundary conditions</li>
+<li>Multiple configurations / browsers</li>
+<li>Detailed report + coverage summary</li>
+</ul>
+<div class="tier-best">Best for: pre-launch builds nearing release</div>
+</div>
 
-      <div class="tier">
-        <div class="tier-name">Comprehensive</div>
-        <div class="tier-price">$400</div>
-        <div class="tier-hours">~18–20 HRS COVERAGE</div>
-        <ul>
-          <li>Full functional pass</li>
-          <li>Detailed test documentation</li>
-          <li>Walkthrough call to review findings</li>
-        </ul>
-        <div class="tier-best">Best for: release candidates, Steam launches</div>
-      </div>
+<div class="tier">
+<div class="tier-name">Comprehensive</div>
+<div class="tier-price">$400</div>
+<div class="tier-hours">~18–20 HRS COVERAGE</div>
+<ul>
+<li>Full functional pass</li>
+<li>Detailed test documentation</li>
+<li>Walkthrough call to review findings</li>
+</ul>
+<div class="tier-best">Best for: release candidates, Steam launches</div>
+</div>
 
-      <div class="tier">
-        <div class="tier-name">Custom</div>
-        <div class="tier-price" style="font-size:24px;">Contact<br><span class="unit">for quote</span></div>
-        <div class="tier-hours">SCOPE DEFINED TOGETHER</div>
-        <ul>
-          <li>Already tested some areas yourself?</li>
-          <li>Need only one feature covered?</li>
-          <li>Have a unique requirement?</li>
-        </ul>
-        <div class="tier-best">Best for: anything that doesn't fit a package</div>
-      </div>
+<div class="tier">
+<div class="tier-name">Custom</div>
+<div class="tier-price" style="font-size:24px;">Contact<br><span class="unit">for quote</span></div>
+<div class="tier-hours">SCOPE DEFINED TOGETHER</div>
+<ul>
+<li>Already tested some areas yourself?</li>
+<li>Need only one feature covered?</li>
+<li>Have a unique requirement?</li>
+</ul>
+<div class="tier-best">Best for: anything that doesn't fit a package</div>
+</div>
 
-    </div>
+</div>
 
-    <div class="payment-note">
-      <b>Payment terms —</b> Basic and Standard engagements require full payment before testing begins. Comprehensive and Custom engagements require a 50% deposit to start, with the remaining balance due upon delivery of the final report. Payment details provided after scope is confirmed.
-    </div>
-  </section>
+<div class="payment-note">
+<b>Payment terms —</b> Basic and Standard engagements require full payment before testing begins. Comprehensive and Custom engagements require a 50% deposit to start, with the remaining balance due upon delivery of the final report. Payment details provided after scope is confirmed.
+</div>
+</section>
 
-  <hr class="rule">
+<hr class="rule">
 
-  <!-- WHY ME -->
-  <section id="why">
-    <div class="section-head">
-      <div>
-        <div class="section-num">03 / BACKGROUND</div>
-        <h2 class="section-title">Why work with me</h2>
-      </div>
-    </div>
+<!-- WHY ME -->
+<section id="why">
+<div class="section-head">
+<div>
+<div class="section-num">03 / BACKGROUND</div>
+<h2 class="section-title">Why work with me</h2>
+</div>
+</div>
 
-    <div class="why-grid">
-      <div class="why-block">
-        <div class="why-label">Games</div>
-        <p>Time at Electronic Arts and Radical Entertainment on titles including:</p>
-        <div class="credit-line">
-          Need for Speed: Most Wanted<br>
-          NBA Live<br>
-          NCAA March Madness<br>
-          EA Rugby<br>
-          Scarface: The World Is Yours<br>
-          Prototype
-        </div>
-      </div>
-      <div class="why-block">
-        <div class="why-label">Business &amp; Enterprise</div>
-        <p>20+ years testing software across industries where a missed edge case isn't just a bad review — it's a real financial or operational problem:</p>
-        <div class="credit-line">
-          Pension Administration<br>
-          Foreign Exchange<br>
-          Real Estate Platforms<br>
-          GIS Mapping Systems
-        </div>
-      </div>
-    </div>
+<div class="why-grid">
+<div class="why-block">
+<div class="why-label">Games</div>
+<p>Time at Electronic Arts and Radical Entertainment on titles including:</p>
+<div class="credit-line">
+Need for Speed: Most Wanted<br>
+NBA Live<br>
+NCAA March Madness<br>
+EA Rugby<br>
+Scarface: The World Is Yours<br>
+Prototype
+</div>
+</div>
+<div class="why-block">
+<div class="why-label">Business &amp; Enterprise</div>
+<p>20+ years testing software across industries where a missed edge case isn't just a bad review — it's a real financial or operational problem:</p>
+<div class="credit-line">
+Pension Administration<br>
+Foreign Exchange<br>
+Real Estate Platforms<br>
+GIS Mapping Systems
+</div>
+</div>
+</div>
 
-    <p class="closing-statement">"I'm not a QA firm and I'm not outsourced overflow work. I'm one experienced tester who treats your project the way I'd treat my own. You'll always know exactly what was tested, exactly what was found, and exactly what to do next."</p>
-  </section>
+<p class="closing-statement">"I'm not a QA firm and I'm not outsourced overflow work. I'm one experienced tester who treats your project the way I'd treat my own. You'll always know exactly what was tested, exactly what was found, and exactly what to do next."</p>
+</section>
 
-  <hr class="rule">
+<hr class="rule">
 
-  <!-- PROCESS -->
-  <section id="process">
-    <div class="section-head">
-      <div>
-        <div class="section-num">04 / PROCESS</div>
-        <h2 class="section-title">How it works</h2>
-      </div>
-    </div>
+<!-- PROCESS -->
+<section id="process">
+<div class="section-head">
+<div>
+<div class="section-num">04 / PROCESS</div>
+<h2 class="section-title">How it works</h2>
+</div>
+</div>
 
-    <div class="process-list">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div>
-          <div class="step-title">Tell me about your project</div>
-          <div class="step-desc">Fill out the form below with what you're building, what platform it runs on, and what you're looking to have tested.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div>
-          <div class="step-title">I follow up within 48 hours</div>
-          <div class="step-desc">To confirm scope, answer questions, and recommend the right package — by email or a short call, whichever fits the request.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div>
-          <div class="step-title">Testing begins</div>
-          <div class="step-desc">Once scope and timeline are confirmed, I get to work and keep you updated if anything significant comes up mid-engagement.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <div>
-          <div class="step-title">You receive your report</div>
-          <div class="step-desc">A complete, severity-rated bug report with everything covered, everything found, and what to prioritize next.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="process-list">
+<div class="step">
+<div class="step-num">01</div>
+<div>
+<div class="step-title">Tell me about your project</div>
+<div class="step-desc">Fill out the form below with what you're building, what platform it runs on, and what you're looking to have tested.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">02</div>
+<div>
+<div class="step-title">I follow up within 48 hours</div>
+<div class="step-desc">To confirm scope, answer questions, and recommend the right package — by email or a short call, whichever fits the request.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">03</div>
+<div>
+<div class="step-title">Testing begins</div>
+<div class="step-desc">Once scope and timeline are confirmed, I get to work and keep you updated if anything significant comes up mid-engagement.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">04</div>
+<div>
+<div class="step-title">You receive your report</div>
+<div class="step-desc">A complete, severity-rated bug report with everything covered, everything found, and what to prioritize next.</div>
+</div>
+</div>
+</div>
+</section>
 
-  <hr class="rule">
+<hr class="rule">
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-head">
-      <div>
-        <div class="section-num">05 / CONTACT</div>
-        <h2 class="section-title">Get in touch</h2>
-      </div>
-    </div>
-    <p class="section-desc">Ready to get your project tested by someone who's been doing this for 20+ years? Fill out the form below and I'll be in touch within 48 hours.</p>
+<!-- CONTACT -->
+<section id="contact">
+<div class="section-head">
+<div>
+<div class="section-num">05 / CONTACT</div>
+<h2 class="section-title">Get in touch</h2>
+</div>
+</div>
+<p class="section-desc">Ready to get your project tested by someone who's been doing this for 20+ years? Fill out the form below and I'll be in touch within 48 hours.</p>
 
-    <div class="form-card">
-      <form id="qa-contact-form">
-        <input type="hidden" name="access_key" value="2538b788-5299-46f8-949e-73711a71e156">
-        <input type="hidden" name="subject" value="New inquiry — Pawlak QA & Consulting">
-        <input type="hidden" name="from_name" value="Pawlak QA & Consulting website">
-        <div class="form-row">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" required>
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required>
-          </div>
-        </div>
+<div class="form-card">
+<form id="qa-contact-form">
+<input type="hidden" name="access_key" value="2538b788-5299-46f8-949e-73711a71e156">
+<input type="hidden" name="subject" value="New inquiry — Pawlak QA & Consulting">
+<input type="hidden" name="from_name" value="Pawlak QA & Consulting website">
+<div class="form-row">
+<div class="field">
+<label for="name">Name</label>
+<input id="name" name="name" type="text" required>
+</div>
+<div class="field">
+<label for="email">Email</label>
+<input id="email" name="email" type="email" required>
+</div>
+</div>
 
-        <div class="form-row">
-          <div class="field">
-            <label for="ptype">Project type</label>
-            <select id="ptype" name="project_type">
-              <option>Web / SaaS</option>
-              <option>Game</option>
-              <option>Desktop App</option>
-              <option>Mobile (Android)</option>
-              <option>Custom</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="stage">Project stage</label>
-            <select id="stage" name="project_stage">
-              <option>Early / Alpha</option>
-              <option>Beta</option>
-              <option>Release Candidate</option>
-              <option>Already Live</option>
-            </select>
-          </div>
-        </div>
+<div class="form-row">
+<div class="field">
+<label for="ptype">Project type</label>
+<select id="ptype" name="project_type">
+<option>Web / SaaS</option>
+<option>Game</option>
+<option>Desktop App</option>
+<option>Mobile (Android)</option>
+<option>Custom</option>
+</select>
+</div>
+<div class="field">
+<label for="stage">Project stage</label>
+<select id="stage" name="project_stage">
+<option>Early / Alpha</option>
+<option>Beta</option>
+<option>Release Candidate</option>
+<option>Already Live</option>
+</select>
+</div>
+</div>
 
-        <div class="form-row">
-          <div class="field">
-            <label for="pkg">Package of interest</label>
-            <select id="pkg" name="package">
-              <option>Consulting — $100</option>
-              <option>Basic — $150</option>
-              <option>Standard — $250</option>
-              <option>Comprehensive — $400</option>
-              <option>Not sure yet / Custom</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="contactpref">Preferred contact method</label>
-            <select id="contactpref" name="contact_preference">
-              <option>Email</option>
-              <option>Phone / Video Call</option>
-            </select>
-          </div>
-        </div>
+<div class="form-row">
+<div class="field">
+<label for="pkg">Package of interest</label>
+<select id="pkg" name="package">
+<option>Consulting — $100</option>
+<option>Basic — $150</option>
+<option>Standard — $250</option>
+<option>Comprehensive — $400</option>
+<option>Not sure yet / Custom</option>
+</select>
+</div>
+<div class="field">
+<label for="contactpref">Preferred contact method</label>
+<select id="contactpref" name="contact_preference">
+<option>Email</option>
+<option>Phone / Video Call</option>
+</select>
+</div>
+</div>
 
-        <div class="form-row">
-          <div class="field full">
-            <label for="desc">What do you need tested?</label>
-            <textarea id="desc" name="project_description" placeholder="Brief description of your app and what you'd like covered..."></textarea>
-          </div>
-        </div>
+<div class="form-row">
+<div class="field full">
+<label for="desc">What do you need tested?</label>
+<textarea id="desc" name="project_description" placeholder="Brief description of your app and what you'd like covered..."></textarea>
+</div>
+</div>
 
-        <div class="form-row">
-          <div class="field">
-            <label for="calltime">Best time to call</label>
-            <input id="calltime" name="best_time_to_call" type="text" placeholder="e.g. Weekday evenings, PST">
-          </div>
-          <div class="field">
-            <label for="tz">Time zone (if not Pacific)</label>
-            <input id="tz" name="time_zone" type="text" placeholder="e.g. EST, GMT+1">
-          </div>
-        </div>
+<div class="form-row">
+<div class="field">
+<label for="calltime">Best time to call</label>
+<input id="calltime" name="best_time_to_call" type="text" placeholder="e.g. Weekday evenings, PST">
+</div>
+<div class="field">
+<label for="tz">Time zone (if not Pacific)</label>
+<input id="tz" name="time_zone" type="text" placeholder="e.g. EST, GMT+1">
+</div>
+</div>
 
-        <button type="submit" id="qa-submit-btn" class="btn btn-primary" style="border:none; cursor:pointer; margin-top:8px;">Submit Request →</button>
-        <div id="qa-form-status" class="form-foot" role="status"></div>
-      </form>
-    </div>
+<button type="submit" id="qa-submit-btn" class="btn btn-primary" style="border:none; cursor:pointer; margin-top:8px;">Submit Request →</button>
+<div id="qa-form-status" class="form-foot" role="status"></div>
+</form>
+</div>
 
-    <script>
-    (function(){
-      var form = document.getElementById('qa-contact-form');
-      var statusEl = document.getElementById('qa-form-status');
-      var btn = document.getElementById('qa-submit-btn');
-      var defaultStatus = "Package selection is just a starting point — final scope and pricing are confirmed together before any work begins. You'll receive an automatic confirmation once you submit.";
-      statusEl.textContent = defaultStatus;
+<script>
+(function(){
+var form = document.getElementById('qa-contact-form');
+var statusEl = document.getElementById('qa-form-status');
+var btn = document.getElementById('qa-submit-btn');
+var defaultStatus = "Package selection is just a starting point — final scope and pricing are confirmed together before any work begins. You'll receive an automatic confirmation once you submit.";
 
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-        statusEl.style.color = '';
-        statusEl.textContent = 'Sending your request...';
+function setStatus(text, state){
+statusEl.textContent = text;
+statusEl.classList.remove('status-active', 'status-sending', 'status-success', 'status-error');
+if (state) {
+statusEl.classList.add('status-active', 'status-' + state);
+}
+}
 
-        var formData = new FormData(form);
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: formData
-        })
-        .then(function(res){ return res.json(); })
-        .then(function(data){
-          if (data.success) {
-            statusEl.style.color = 'var(--pass-bright)';
-            statusEl.textContent = "Thanks — your request was sent. I'll follow up within 48 hours.";
-            form.reset();
-            btn.textContent = 'Submit Request →';
-            btn.disabled = false;
-          } else {
-            throw new Error(data.message || 'Submission failed');
-          }
-        })
-        .catch(function(){
-          statusEl.style.color = '#c97a7a';
-          statusEl.textContent = "Something went wrong sending this. Please email bpawlak@gmail.com directly instead.";
-          btn.textContent = 'Submit Request →';
-          btn.disabled = false;
-        });
-      });
-    })();
-    </script>
-  </section>
+setStatus(defaultStatus, null);
+
+form.addEventListener('submit', function(e){
+e.preventDefault();
+btn.disabled = true;
+btn.textContent = 'Sending...';
+setStatus('Sending your request...', 'sending');
+
+var formData = new FormData(form);
+fetch('https://api.web3forms.com/submit', {
+method: 'POST',
+headers: { 'Accept': 'application/json' },
+body: formData
+})
+.then(function(res){ return res.json(); })
+.then(function(data){
+if (data.success) {
+setStatus("✓ Request sent — I'll follow up within 48 hours.", 'success');
+form.reset();
+btn.textContent = 'Submit Request →';
+btn.disabled = false;
+} else {
+throw new Error(data.message || 'Submission failed');
+}
+})
+.catch(function(){
+setStatus("✕ Something went wrong sending this. Please email bpawlak@gmail.com directly instead.", 'error');
+btn.textContent = 'Submit Request →';
+btn.disabled = false;
+});
+});
+})();
+</script>
+</section>
 
 </div>
 
 <footer>
-  <div class="wrap footer-inner">
-    <span class="meta-label">© 2026 PAWLAK QA & CONSULTING — VICTORIA, BC</span>
-    <span class="meta-label">bpawlak@gmail.com</span>
-  </div>
+<div class="wrap footer-inner">
+<span class="meta-label">© 2026 PAWLAK QA & CONSULTING — VICTORIA, BC</span>
+<span class="meta-label">bpawlak@gmail.com</span>
+</div>
 </footer>
 
 </body>
